@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbeitsanwesenheitsrechner</title>
+    <style>
+
+
+/* ########################################################## Stil für den gesamten Körper##################################################################################### */
+   
+    body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #0d1117; /* Farbe dunkler Hintergrund */
+            background-image: linear-gradient(135deg, #0d1117 0%, #104492 100%); /* Erhöhte Spur von Lila */
+            color: #d4dde6; /* Farbe Textfarbe */
+            margin: 0;
+            padding: 20px;
+        }
+
+
+/* ########################################################## Stil für die Überschrift ########################################################################################*/
+   
+    h1 {
+            color: #58a6ff; /* Farbe Blau */
+            margin-bottom: 20px; /* Hinzugefügter Abstand für bessere Abstände */
+        }
+
+
+/* ########################################################## Stil für Labels, Eingabefelder und Absätze ##################################################################################### */
+    
+    label, input, p {
+            font-size: 1.2rem;
+            margin-bottom: 10px; /* Hinzugefügter Abstand für bessere Abstände */
+        }
+
+
+/* ########################################################## Stil für hervorgehobenen Text ################################################################################################### */
+     
+    .highlight {
+            color: #ff7b72; /* Farbe Rot */
+            font-weight: bold;
+        }
+
+
+/* ########################################################## Stil für das Timer-Feld ######################################################################################################### */
+     
+    .timer-field {
+            color: #ff7b72; /* Farbe Rot */
+            font-weight: bold;
+        }
+
+
+/* ########################################################## Stil für Eingabefelder und Schaltflächen ######################################################################################## */
+      
+    input, button {
+            padding: 10px;
+            border: 2px solid #58a6ff; /* Farbe Blau */
+            border-radius: 5px;
+            font-size: 1.2rem;
+            background-color: #161b22; /* Farbe Eingabe-Hintergrund */
+            color: #c9d1d9; /* Farbe Textfarbe */
+            text-align: center; /* Zentrierter Text */
+        }
+
+
+/* ########################################################## Stil für fokussierte Eingabefelder ######################################################################################################## */
+       
+     input:focus {
+            outline: none;
+            border-color: #1f6feb; /* Farbe Fokusfarbe */
+        }
+
+
+/* ########################################################## Stil für Schaltflächen ############################################################################################################*/
+       
+        button {
+            background-color: #238636; /* Farbe Grün */
+            color: white;
+            cursor: pointer;
+        }
+
+
+/* ########################################################## Stil für Schaltflächen beim Hover  ################################################################################################*/
+       
+        button:hover {
+            background-color: #2ea043; /* Farbe Grün beim Hover */
+        }
+
+
+/* ########################################################## Stil für die Timer-Box ##############################################################################################################*/
+       
+        .timer-box {
+            display: inline-block;
+            padding: 10px;
+            border: 2px solid #ff7b72; /* Farbe Rot */
+            border-radius: 5px;
+            background-color: #161b22; /* Farbe Eingabe-Hintergrund */
+            color: #ff7b72; /* Farbe Rot */
+            font-weight: bold;
+        }
+
+
+/* ########################################################## Stil für das Logo oben rechts ######################################################################################################## */
+      
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px; /* Breite nach Bedarf anpassen */
+        }
+
+
+/* ########################################################## Stil für den Countdown-Container ##################################################################################################*/
+      
+        .countdown-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+
+/* ########################################################## Stil für die Countdown-Elemente links und rechts #####################################################################################*/
+        
+        .countdown-left, .countdown-right {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ff7b72; /* Farbe Rot */
+            border-radius: 5px;
+            background-color: #161b22; /* Farbe Eingabe-Hintergrund */
+            color: #ff7b72; /* Farbe Rot */
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .author {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #c9d1d9; /* Textfarbe */
+            font-size: 0.9rem;
+            font-family: 'Courier New', Courier, monospace; /* Andere Schriftart */
+            background-color: #161b22; /* Hintergrundfarbe */
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: 1px solid #58a6ff; /* Rahmenfarbe */
+            text-align: center;
+            white-space: nowrap;
+        }
+        .author span {
+            display: block;
+        }
+
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(58%) sepia(100%) saturate(1000%) hue-rotate(180deg) brightness(100%) contrast(100%);
+        }
+
+</style>
+</head>
+<body>
+
+    <!-- Text oben links -->
+    <div class="author">
+        <span>Erstellt von</span>
+        <span>Moritz Dorst</span>
+    </div>
+    <!-- Logo oben rechts -->
+    <img src="https://link.fobshanghai.com/bbsimage/fair/embedded_de2022/165.png" alt="NewTec Logo" class="logo"> <!-- Bildlink einfügen für Logo in der Ecke -->
+
+
+    <!-- Überschrift -->
+    <h1>Arbeitsanwesenheitsrechner</h1>
+
+
+    <!-- Eingabefeld für die tägliche Arbeitszeit -->
+    <label for="work-hours">Wie viele Stunden musst du täglich arbeiten?</label><br>
+    <input type="number" id="work-hours" required min="1" max="24" value="8"><br><br>
+
+
+    <!-- Eingabefeld für die Pausenzeit -->
+    <label for="break-time">Wie viele Minuten Pause hast du?</label><br>
+    <input type="number" id="break-time" required min="0" value="30"><br><br>
+
+
+    <!-- Eingabefeld für die Startzeit -->
+    <label for="start-time">Wann bist du gekommen? (HH:MM)</label><br>
+    <input type="time" id="start-time" required onkeydown="focusNext(event, 'end-time')"><br><br>
+
+
+    <!-- Eingabefeld für die Endzeit -->
+    <label for="end-time">Wann willst du gehen? (HH:MM)</label><br>
+    <input type="time" id="end-time" required onkeydown="focusNext(event, 'berechnen-button')"><br><br>
+
+
+    <!-- Schaltfläche zum Berechnen -->
+    <button id="berechnen-button" onclick="berechne()">Berechnen</button><br><br>
+
+    <!-- Ergebnisanzeige -->
+    <p id="ergebnis"></p>
+
+
+    <!-- Container für die Countdown-Anzeigen -->
+    <div class="countdown-container">
+
+        <!-- Countdown-Anzeige für die vergangene Zeit -->
+        <p id="countdown-left" class="countdown-left"></p>
+
+        <!-- Countdown-Anzeige für die verbleibende Zeit -->
+        <p id="countdown-right" class="countdown-right"></p>
+    </div>
+
+
+
+
+
+
+    <script>
+    
+    // Funktion zum Fokussieren des nächsten Eingabefelds bei Enter-Taste
+        function focusNext(event, nextId) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById(nextId).focus();
+            }
+        }
+
+    
+        // Funktion zum Berechnen der Arbeitszeit
+        function berechne() {
+            // Eingaben abrufen
+            const workHoursInput = document.getElementById("work-hours").value;
+            const breakTimeInput = document.getElementById("break-time").value;
+            const startTimeInput = document.getElementById("start-time").value;
+            const endTimeInput = document.getElementById("end-time").value;
+
+            if (!workHoursInput || !breakTimeInput || !startTimeInput || !endTimeInput) {
+                alert("Bitte alle Zeiten, Arbeitsstunden und Pausenzeit eingeben!");
+                return;
+            }
+
+            const workHours = parseFloat(workHoursInput);
+            const breakTime = parseFloat(breakTimeInput);
+
+            // Zeiten in Date-Objekte umwandeln
+            const jetzt = new Date();
+            const startTime = new Date(jetzt.toDateString() + " " + startTimeInput + ":00");
+            const endTime = new Date(jetzt.toDateString() + " " + endTimeInput + ":00");
+            const regulaereEndzeit = new Date(startTime.getTime() + workHours * 60 * 60 * 1000 + breakTime * 60 * 1000); // Arbeitsstunden + Pausenzeit
+
+            
+            // Überstunden oder Minusstunden berechnen
+            let ergebnisText = `Du solltest regulär um ${regulaereEndzeit.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} Uhr gehen.<br>`;
+            const differenz = (endTime - regulaereEndzeit) / 1000; // Differenz in Sekunden
+
+            if (differenz > 0) {
+                const stunden = Math.floor(differenz / 3600);
+                const minuten = Math.floor((differenz % 3600) / 60);
+                ergebnisText += `Wenn du bis ${endTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} Uhr bleibst, machst du <span class="highlight">${stunden}:${minuten.toString().padStart(2, '0')}</span> Stunden Plus.`;
+            } else if (differenz < 0) {
+                const stunden = Math.abs(Math.floor(differenz / 3600));
+                const minuten = Math.abs(Math.floor((differenz % 3600) / 60));
+                ergebnisText += `Wenn du bis ${endTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} Uhr gehst, machst du <span class="highlight">${stunden}:${minuten.toString().padStart(2, '0')}</span> Stunden Minus.`;
+            } else {
+                ergebnisText += "Du gehst rechtzeitig und machst keine Über- oder Minusstunden.";
+            }
+
+            document.getElementById("ergebnis").innerHTML = ergebnisText;
+
+            
+            
+            // Countdown starten
+            let interval = setInterval(() => {
+                const jetzt = new Date();
+                const verstrichen = (jetzt - startTime) / 1000; // Verstrichene Zeit in Sekunden
+                const verbleibend = (regulaereEndzeit - jetzt) / 1000; // Verbleibende Zeit in Sekunden
+
+                const stundenVerstrichen = Math.floor(verstrichen / 3600);
+                const minutenVerstrichen = Math.floor((verstrichen % 3600) / 60);
+                const stundenVerbleibend = Math.max(0, Math.floor(verbleibend / 3600));
+                const minutenVerbleibend = Math.max(0, Math.floor((verbleibend % 3600) / 60));
+                const sekundenVerbleibend = Math.max(0, Math.floor(verbleibend % 60));
+
+            
+            
+                // Anzeige der vergangenen Zeit
+                document.getElementById("countdown-left").innerHTML = `
+                    Du bist seit ${stundenVerstrichen}:${minutenVerstrichen.toString().padStart(2, '0')} Stunden hier.
+                `;
+            
+            
+                // Anzeige der verbleibenden Zeit
+                document.getElementById("countdown-right").innerHTML = `
+                    Noch zu bleiben: ${stundenVerbleibend}:${minutenVerbleibend.toString().padStart(2, '0')}:${sekundenVerbleibend.toString().padStart(2, '0')}.
+                `;
+
+                if (verbleibend <= 0) {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
+
+
+<style>
+    .body {
+        color: rgb(207, 21, 21);
+    } 
+</style>
